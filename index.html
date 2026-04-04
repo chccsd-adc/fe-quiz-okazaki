@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本情報技術者：朝礼クイズ目次</title>
+    <style>
+        body { font-family: "Helvetica Neue", Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        h1 { text-align: center; color: #004085; border-bottom: 2px solid #004085; padding-bottom: 10px; }
+        .quiz-list { list-style: none; padding: 0; }
+        .quiz-item { 
+            background: white; margin-bottom: 10px; padding: 15px; border-radius: 8px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .btn { 
+            text-decoration: none; background: #007bff; color: white; padding: 8px 20px; 
+            border-radius: 20px; font-weight: bold; font-size: 0.9em; transition: 0.3s;
+        }
+        .btn.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; }
+        .status-badge { font-size: 0.8em; padding: 4px 8px; border-radius: 4px; }
+        .status-preparing { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .status-open { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+    <h1>朝礼クイズ・ポータル</h1>
+    <p style="text-align: center;">合格を目指して、毎日少しずつ解きましょう！</p>
+
+    <ul id="quiz-list" class="quiz-list">
+        </ul>
+
+    <script>
+        const totalQuizzes = 30; // 30回分用意
+        const listContainer = document.getElementById('quiz-list');
+
+        async function generateList() {
+            for (let i = 1; i <= totalQuizzes; i++) {
+                const fileName = `day${i}.html`;
+                const li = document.createElement('li');
+                li.className = 'quiz-item';
+
+                // ファイルが存在するかチェック（Fetch APIを使用）
+                const exists = await checkFileExists(fileName);
+
+                if (exists) {
+                    li.innerHTML = `
+                        <span>第 ${i} 回 クイズ</span>
+                        <div>
+                            <span class="status-badge status-open">公開中</span>
+                            <a href="${fileName}" class="btn">挑戦する</a>
+                        </div>
+                    `;
+                } else {
+                    li.innerHTML = `
+                        <span style="color: #999;">第 ${i} 回 クイズ</span>
+                        <div>
+                            <span class="status-badge status-preparing">作成途中</span>
+                            <a href="#" class="btn disabled">未公開</a>
+                        </div>
+                    `;
+                }
+                listContainer.appendChild(li);
+            }
+        }
+
+        // ファイルの実在確認関数
+        async function checkFileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        generateList();
+    </script>
+</body>
+</html>
