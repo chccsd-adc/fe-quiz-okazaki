@@ -92,3 +92,76 @@
                     <label><input type="radio" name="q4" value="1"> 外部キー</label>
                     <label><input type="radio" name="q4" value="2"> インデックス</label>
                 </div>
+                <div id="res-q4" class="result-box"></div>
+            </div>
+
+            <div class="card">
+                <div class="question">Q5. プロジェクト管理において、作業の依存関係を矢印で示した図を何と呼ぶ？</div>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="0"> ガントチャート</label>
+                    <label><input type="radio" name="q5" value="1"> アローダイアグラム（PERT図）</label>
+                    <label><input type="radio" name="q5" value="2"> レーダーチャート</label>
+                </div>
+                <div id="res-q5" class="result-box"></div>
+            </div>
+
+            <button type="button" id="submit-btn">回答を送信して採点</button>
+        </form>
+
+        <div class="footer-nav">
+            <a href="index.html" class="back-btn-large">目次ページに戻る</a>
+        </div>
+    </div>
+
+    <script>
+        let seconds = 0;
+        const timerElement = document.getElementById('timer');
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            timerElement.innerText = `${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            clearInterval(timerInterval);
+            
+            const answers = {
+                q1: { correct: 1, exp: "10Mbit ÷ 1Mbps = 10秒 です。M（メガ）同士なので単位変換なしで計算できます。" },
+                q2: { correct: 1, exp: "HTTPは80番、HTTPSは443番、SMTP（メール送信）は25番が標準です。" },
+                q3: { correct: 1, exp: "特定の組織や個人を狙い撃ちする攻撃を標的型攻撃と呼びます。" },
+                q4: { correct: 0, exp: "主キーは、レコードを重複なく特定するための重要な項目です。" },
+                q5: { correct: 1, exp: "作業の順序をネットワーク状に表したものがアローダイアグラムです。" }
+            };
+
+            let score = 0;
+            for (let qId in answers) {
+                const options = document.getElementsByName(qId);
+                const resDiv = document.getElementById('res-' + qId);
+                let selected = -1;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].checked) selected = i;
+                }
+
+                resDiv.style.display = "block";
+                if (selected == answers[qId].correct) {
+                    score++;
+                    resDiv.className = "result-box correct";
+                    resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers[qId].exp + "</div>";
+                } else {
+                    resDiv.className = "result-box wrong";
+                    resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers[qId].exp + "</div>";
+                }
+            }
+
+            const finalRes = document.getElementById('final-result');
+            finalRes.style.display = "block";
+            finalRes.innerHTML = `結果：5問中 ${score} 問正解！<br><small>タイム: ${timerElement.innerText}</small>`;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.disabled = true;
+            this.innerText = "採点完了";
+        });
+    </script>
+</body>
+</html>
