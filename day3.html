@@ -59,11 +59,11 @@
   endfor
   total を出力する</div>
                 <div class="options">
-                    <label><input type="radio" name="q1" value="0"> 7 （1+2+4 の場合）</label>
-                    <label><input type="radio" name="q1" value="1"> 10 （1+2+3+4 の場合）</label>
-                    <label><input type="radio" name="q1" value="2"> 12 （正解のパターン）</label>
-                    <label><input type="radio" name="q1" value="3"> 15 （1から5まで全て足した場合）</label>
-                    <label><input type="radio" name="q1" value="4"> 18 （初期値やループ回数の誤認）</label>
+                    <label><input type="radio" name="q1" value="0"> 7</label>
+                    <label><input type="radio" name="q1" value="1"> 10</label>
+                    <label><input type="radio" name="q1" value="2"> 12</label>
+                    <label><input type="radio" name="q1" value="3"> 15</label>
+                    <label><input type="radio" name="q1" value="4"> 18</label>
                 </div>
                 <div id="res-q1" class="result-box"></div>
             </div>
@@ -110,8 +110,8 @@
             clearInterval(timerInterval);
             
             const answers = {
-                q1: { correct: 2, exp: "iが1,2,3,4,5と変化する中で、「3ではない時」だけ足します。\n計算式：1 + 2 + 4 + 5 = 12\n※5までしっかり足すのがポイントです。" },
-                q2: { correct: 2, exp: "条件が「3より大きい」に変わりました。つまり4と5の時だけ足します。\n計算式：4 + 5 = 9\n※3を含まない（より大きい）という点に注意！" }
+                q1: { correct: 2, exp: "iが1,2,3,4,5と変化する中で、「3ではない時」だけ足します。\n計算式：1 + 2 + 4 + 5 = 12\n※5までしっかりループさせるのがポイントです。" },
+                q2: { correct: 2, exp: "条件が「3より大きい」に変わりました。つまり4と5の時だけ足します。\n計算式：4 + 5 = 9\n※境界値（3を含むかどうか）の判断が重要です。" }
             };
 
             let score = 0;
