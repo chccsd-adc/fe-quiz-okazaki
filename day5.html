@@ -1,0 +1,56 @@
+<h1>第5回：ネットワーク編</h1>
+    <div class="card">
+        <div class="question">Q1. IPv4アドレスにおいて、192.168.1.1 のような表記に使われる数値は、何ビットごとに区切られている？</div>
+        <div class="options">
+            <label><input type="radio" name="q1" value="0"> 4ビット</label>
+            <label><input type="radio" name="q1" value="1"> 8ビット</label>
+            <label><input type="radio" name="q1" value="2"> 16ビット</label>
+        </div>
+        <div id="res-q1" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q2. プライベートIPアドレスをグローバルIPアドレスに相互変換する技術はどれか？</div>
+        <div class="options">
+            <label><input type="radio" name="q2" value="0"> DHCP</label>
+            <label><input type="radio" name="q2" value="1"> DNS</label>
+            <label><input type="radio" name="q2" value="2"> NAT（NAT/NAPT）</label>
+        </div>
+        <div id="res-q2" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q3. サブネットマスクが「255.255.255.0」の場合、一つのネットワーク内に最大で何台の端末（ホスト）を接続できるか？（アドレス重複なし、ブロードキャスト用等を除く）</div>
+        <div class="options">
+            <label><input type="radio" name="q3" value="0"> 254台</label>
+            <label><input type="radio" name="q3" value="1"> 255台</label>
+            <label><input type="radio" name="q3" value="2"> 256台</label>
+        </div>
+        <div id="res-q3" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q4. ドメイン名（www.example.com等）をIPアドレスに変換する役割を持つ仕組みはどれか？</div>
+        <div class="options">
+            <label><input type="radio" name="q4" value="0"> HTTP</label>
+            <label><input type="radio" name="q4" value="1"> FTP</label>
+            <label><input type="radio" name="q4" value="2"> DNS</label>
+        </div>
+        <div id="res-q4" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q5. ネットワークをOSI参照モデルの「レイヤ3（ネットワーク層）」で接続し、経路選択（ルーティング）を行う機器は？</div>
+        <div class="options">
+            <label><input type="radio" name="q5" value="0"> スイッチングハブ</label>
+            <label><input type="radio" name="q5" value="1"> ルータ</label>
+            <label><input type="radio" name="q5" value="2"> リピータ</label>
+        </div>
+        <div id="res-q5" class="result-box"></div>
+    </div>
+
+<script>
+const answers = {
+    q1: { correct: 1, exp: "8ビット（0〜255）× 4区画で合計32ビットの構成です。" },
+    q2: { correct: 2, exp: "NATはIPアドレスを変換し、限られたグローバルIPを有効活用する技術です。" },
+    q3: { correct: 0, exp: "256個から、ネットワークアドレス（0）とブロードキャスト（255）を引いた254台が正解です。" },
+    q4: { correct: 2, exp: "DNSは、名前と数値を結びつける役割をします。" },
+    q5: { correct: 1, exp: "経路（ルート）を選択するのがルータの役割です。" }
+};
+</script>
