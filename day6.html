@@ -72,14 +72,30 @@
             const answers = {
                 q1: { 
                     correct: 1, 
-                    exp: "【トレースの結果】\n1. 初期: a=10, b=20, c=5\n2. (a<b)は真: c=10+5=15, a=20-10=10\n3. (c>a)は真: c=15-10=5\n\n【💡 関数名のヒント】\n・sort：並び替え\n・search：探索\n・swap：入れ替え\n・calc：計算\nprocは「手続」の略号です。"
+                    exp: "【トレースの結果】\n" +
+                         "1. 初期値: a=10, b=20, c=5\n" +
+                         "2. 最初の if (a < b) は成立：\n" +
+                         "   c = 10 + 5 = 15\n" +
+                         "   a = 20 - 10 = 10\n" +
+                         "3. 次の if (c > a) は 15 > 10 なので成立：\n" +
+                         "   c = 15 - 10 = 5\n\n" +
+                         "【💡 関数名のヒント】\n" +
+                         "・sort：並び替え\n" +
+                         "・search：探索\n" +
+                         "・swap：入れ替え\n" +
+                         "・calc：計算\n" +
+                         "procは「手続」を意味する procedure の略号です。"
                 }
             };
             const options = document.getElementsByName('q1');
             let selected = -1;
             for (let i = 0; i < options.length; i++) if (options[i].checked) selected = i;
 
-            if (selected === -1) return;
+            if (selected === -1) {
+                alert("回答を選択してください");
+                return;
+            }
+
             const resDiv = document.getElementById('res-q1');
             resDiv.style.display = "block";
             if (selected == answers.q1.correct) {
