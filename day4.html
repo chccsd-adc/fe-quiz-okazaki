@@ -1,0 +1,56 @@
+<h1>第4回：情報セキュリティ編</h1>
+    <div class="card">
+        <div class="question">Q1. 公開鍵暗号方式において、送信者が「受信者の公開鍵」で暗号化して送ったデータは、どの鍵を使えば復号できるか？</div>
+        <div class="options">
+            <label><input type="radio" name="q1" value="0"> 送信者の公開鍵</label>
+            <label><input type="radio" name="q1" value="1"> 受信者の秘密鍵</label>
+            <label><input type="radio" name="q1" value="2"> 受信者の公開鍵</label>
+        </div>
+        <div id="res-q1" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q2. IDとパスワードだけでなく、スマホへの通知や指紋などを組み合わせて認証することを何と呼ぶ？</div>
+        <div class="options">
+            <label><input type="radio" name="q2" value="0"> 多要素認証（MFA）</label>
+            <label><input type="radio" name="q2" value="1"> シングルサインオン</label>
+            <label><input type="radio" name="q2" value="2"> リスクベース認証</label>
+        </div>
+        <div id="res-q2" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q3. 4桁の数字（0000〜9999）のパスワードを、総当たり攻撃（ブルートフォース）で解く場合、最大で何回の試行が必要か？</div>
+        <div class="options">
+            <label><input type="radio" name="q3" value="0"> 4,000回</label>
+            <label><input type="radio" name="q3" value="1"> 9,999回</label>
+            <label><input type="radio" name="q3" value="2"> 10,000回</label>
+        </div>
+        <div id="res-q3" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q4. OSやソフトの脆弱性が発見されてから、修正プログラムが提供される前に行われる攻撃を何と呼ぶ？</div>
+        <div class="options">
+            <label><input type="radio" name="q4" value="0"> ゼロデイ攻撃</label>
+            <label><input type="radio" name="q4" value="1"> スニフィング</label>
+            <label><input type="radio" name="q4" value="2"> バッファオーバフロー</label>
+        </div>
+        <div id="res-q4" class="result-box"></div>
+    </div>
+    <div class="card">
+        <div class="question">Q5. 外部から組織内のネットワークへの不正な侵入を防ぐため、通信を監視・遮断する仕組みを何と呼ぶ？</div>
+        <div class="options">
+            <label><input type="radio" name="q5" value="0"> IDS（侵入検知システム）</label>
+            <label><input type="radio" name="q5" value="1"> ファイアウォール</label>
+            <label><input type="radio" name="q5" value="2"> プロキシサーバ</label>
+        </div>
+        <div id="res-q5" class="result-box"></div>
+    </div>
+
+<script>
+const answers = {
+    q1: { correct: 1, exp: "ペアとなる鍵でしか復号できません。受信者だけが持っている『秘密鍵』を使うのが正解です。" },
+    q2: { correct: 0, exp: "『知識』『所有』『生体』のうち2つ以上を組み合わせるのが多要素認証です。" },
+    q3: { correct: 2, exp: "0000から9999までなので、全部で10,000通り（$10^4$通り）あります。" },
+    q4: { correct: 0, exp: "対策が取られるまでの『0日目』を狙うためゼロデイ攻撃と呼ばれます。" },
+    q5: { correct: 1, exp: "壁（防火壁）となってパケットの通過可否を判断するのがファイアウォールです。" }
+};
+</script>
