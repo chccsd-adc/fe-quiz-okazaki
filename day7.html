@@ -13,13 +13,13 @@
         .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
         
-        /* クリティカルパス図のスタイル */
-        .diagram-container { background: #fff; padding: 20px; border: 1px solid #ccc; margin: 15px 0; overflow-x: auto; text-align: center; }
-        .network-map { position: relative; width: 320px; height: 160px; margin: 0 auto; font-size: 0.8rem; }
-        .node { position: absolute; width: 30px; height: 30px; border: 2px solid #333; border-radius: 50%; background: #fff; line-height: 30px; font-weight: bold; z-index: 2; }
+        /* クリティカルパス図のスタイル（複雑化） */
+        .diagram-container { background: #fff; padding: 20px; border: 1px solid #ccc; margin: 15px 0; overflow-x: auto; }
+        .network-map { position: relative; width: 420px; height: 180px; margin: 0 auto; }
+        .node { position: absolute; width: 30px; height: 30px; border: 2px solid #333; border-radius: 50%; background: #fff; line-height: 30px; font-weight: bold; z-index: 2; text-align: center; }
         .arrow { position: absolute; background: #333; height: 2px; z-index: 1; }
         .arrow::after { content: ''; position: absolute; right: -2px; top: -4px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid #333; }
-        .task-label { position: absolute; background: #fff; padding: 0 4px; font-weight: bold; color: #d9534f; z-index: 3; }
+        .task-label { position: absolute; background: #fff; padding: 0 2px; font-weight: bold; color: #d9534f; font-size: 0.75rem; z-index: 3; white-space: nowrap; }
 
         .options label { display: block; padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; font-size: 0.95rem; }
         input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
@@ -46,74 +46,74 @@
             <div class="question">Q1. 図のアローダイアグラムにおいて、プロジェクト開始から終了までの最短日数は何日か？</div>
             <div class="diagram-container">
                 <div class="network-map">
-                    <div class="node" style="top:60px; left:10px;">①</div>
-                    <div class="node" style="top:10px; left:140px;">②</div>
-                    <div class="node" style="top:110px; left:140px;">③</div>
-                    <div class="node" style="top:60px; left:270px;">④</div>
-                    <div class="arrow" style="top:40px; left:35px; width:110px; transform:rotate(-22deg);"></div>
-                    <div class="arrow" style="top:90px; left:35px; width:110px; transform:rotate(22deg);"></div>
-                    <div class="arrow" style="top:40px; left:165px; width:110px; transform:rotate(22deg);"></div>
-                    <div class="arrow" style="top:90px; left:165px; width:110px; transform:rotate(-22deg);"></div>
-                    <div class="task-label" style="top:25px; left:55px;">A (3日)</div>
-                    <div class="task-label" style="top:105px; left:55px;">B (5日)</div>
-                    <div class="task-label" style="top:25px; left:185px;">C (4日)</div>
-                    <div class="task-label" style="top:105px; left:185px;">D (2日)</div>
+                    <div class="node" style="top:75px; left:10px;">1</div>
+                    <div class="node" style="top:10px; left:110px;">2</div>
+                    <div class="node" style="top:75px; left:210px;">3</div>
+                    <div class="node" style="top:140px; left:110px;">4</div>
+                    <div class="node" style="top:75px; left:350px;">5</div>
+
+                    <div class="arrow" style="top:50px; left:35px; width:85px; transform:rotate(-35deg);"></div> <div class="arrow" style="top:88px; left:40px; width:170px;"></div> <div class="arrow" style="top:125px; left:35px; width:85px; transform:rotate(35deg);"></div> <div class="arrow" style="top:50px; left:135px; width:85px; transform:rotate(35deg);"></div> <div class="arrow" style="top:125px; left:135px; width:85px; transform:rotate(-35deg);"></div> <div class="arrow" style="top:88px; left:240px; width:110px;"></div> <div class="task-label" style="top:25px; left:40px;">A(3)</div>
+                    <div class="task-label" style="top:70px; left:110px;">B(10)</div>
+                    <div class="task-label" style="top:135px; left:40px;">C(5)</div>
+                    <div class="task-label" style="top:45px; left:165px;">D(2)</div>
+                    <div class="task-label" style="top:115px; left:165px;">E(6)</div>
+                    <div class="task-label" style="top:70px; left:275px;">F(4)</div>
                 </div>
             </div>
             <div class="options">
-                <label><input type="radio" name="q1" value="0"> 5日</label>
-                <label><input type="radio" name="q1" value="1"> 7日</label>
-                <label><input type="radio" name="q1" value="2"> 8日</label>
-                <label><input type="radio" name="q1" value="3"> 9日</label>
-                <label><input type="radio" name="q1" value="4"> 14日</label>
+                <label><input type="radio" name="q1" value="0"> 13日</label>
+                <label><input type="radio" name="q1" value="1"> 14日</label>
+                <label><input type="radio" name="q1" value="2"> 15日</label>
+                <label><input type="radio" name="q1" value="3"> 17日</label>
+                <label><input type="radio" name="q1" value="4"> 19日</label>
             </div>
             <div id="res-q1" class="result-box"></div>
         </div>
 
         <div class="card">
-            <div class="question">Q2. ITIL 4において、サービスの利用者が目的の結果を達成できるよう、価値を共創する役割はどれか？</div>
+            <div class="question">Q2. ITIL 4において、製品やサービスを「共同で」作り上げ、価値を生み出すという考え方を何と呼ぶか？</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="0"> スポンサー</label>
-                <label><input type="radio" name="q2" value="1"> カスタマ（顧客）</label>
-                <label><input type="radio" name="q2" value="2"> ユーザ（利用者）</label>
-                <label><input type="radio" name="q2" value="3"> サービスプロバイダ</label>
-                <label><input type="radio" name="q2" value="4"> 全員</label>
+                <label><input type="radio" name="q2" value="0"> 価値の提供</label>
+                <label><input type="radio" name="q2" value="1"> 価値の共創 (Co-creation)</label>
+                <label><input type="radio" name="q2" value="2"> 価値の譲渡</label>
+                <label><input type="radio" name="q2" value="3"> アウトソーシング</label>
+                <label><input type="radio" name="q2" value="4"> サービスエクレア</label>
             </div>
             <div id="res-q2" class="result-box"></div>
         </div>
 
         <div class="card">
-            <div class="question">Q3. 項目別に件数を並べ、累積比率を折れ線グラフで表した図。重要な2割の原因が全体の8割を占めることを確認するのに使うものは？</div>
+            <div class="question">Q3. データの相関関係（一方が増えればもう一方が増えるか等）を視覚的に判断するために、二つの項目を点としてプロットした図は？</div>
             <div class="options">
-                <label><input type="radio" name="q3" value="0"> 散布図</label>
-                <label><input type="radio" name="q3" value="1"> 特性要因図</label>
+                <label><input type="radio" name="q3" value="0"> ヒストグラム</label>
+                <label><input type="radio" name="q3" value="1"> 散布図</label>
                 <label><input type="radio" name="q3" value="2"> 管理図</label>
                 <label><input type="radio" name="q3" value="3"> パレート図</label>
-                <label><input type="radio" name="q3" value="4"> ヒストグラム</label>
+                <label><input type="radio" name="q3" value="4"> 特性要因図</label>
             </div>
             <div id="res-q3" class="result-box"></div>
         </div>
 
         <div class="card">
-            <div class="question">Q4. 全体の作業量が20人月のプロジェクトを5名で開始した。1ヶ月経過した時点で、全体の20%が終了している場合、進捗状況は？</div>
+            <div class="question">Q4. 1人で作業すると15日かかる工程を、3名で実施する計画を立てた。開始から3日経過した時点で、完了した作業は全体の20%であった。この時の状況は？</div>
             <div class="options">
-                <label><input type="radio" name="q4" value="0"> 予定より遅れている</label>
+                <label><input type="radio" name="q4" value="0"> 予定より進んでいる</label>
                 <label><input type="radio" name="q4" value="1"> 予定通り</label>
-                <label><input type="radio" name="q4" value="2"> 予定より進んでいる</label>
-                <label><input type="radio" name="q4" value="3"> 2ヶ月分の遅れ</label>
-                <label><input type="radio" name="q4" value="4"> 計算不能</label>
+                <label><input type="radio" name="q4" value="2"> 1日分遅れている</label>
+                <label><input type="radio" name="q4" value="3"> 3日分遅れている</label>
+                <label><input type="radio" name="q4" value="4"> 終了予定が早まる</label>
             </div>
             <div id="res-q4" class="result-box"></div>
         </div>
 
         <div class="card">
-            <div class="question">Q5. ITIL 4の「サービス価値体系 (SVS)」において、活動の核となる中心的な要素はどれか？</div>
+            <div class="question">Q5. ITIL 4の「従うべき7つの原則」のうち、「複雑にせず、価値を生む最小限の手順で行う」という考え方はどれか？</div>
             <div class="options">
-                <label><input type="radio" name="q5" value="0"> 従うべき原則</label>
-                <label><input type="radio" name="q5" value="1"> ガバナンス</label>
-                <label><input type="radio" name="q5" value="2"> サービスバリューチェーン</label>
-                <label><input type="radio" name="q5" value="3"> 継続的改善</label>
-                <label><input type="radio" name="q5" value="4"> プラクティス</label>
+                <label><input type="radio" name="q5" value="0"> 価値に注目する</label>
+                <label><input type="radio" name="q5" value="1"> 現状から開始する</label>
+                <label><input type="radio" name="q5" value="2"> シンプルに保ち実用的である</label>
+                <label><input type="radio" name="q5" value="3"> コラボレーションし可視性を高める</label>
+                <label><input type="radio" name="q5" value="4"> 最適化し自動化する</label>
             </div>
             <div id="res-q5" class="result-box"></div>
         </div>
@@ -132,11 +132,11 @@
 
         document.getElementById('submit-btn').addEventListener('click', function() {
             const answers = {
-                q1: { correct: 1, exp: "経路は ①→②→④(3+4=7日) と ①→③→④(5+2=7日) です。どちらも7日なので、最短日数は7日です。" },
-                q2: { correct: 3, exp: "ITIL 4の定義では、価値は「共創（co-creation）」されるもので、プロバイダがその役割を担います。" },
-                q3: { correct: 3, exp: "パレート図は、重点管理すべき項目を特定するのに使われます（AB分析）。" },
-                q4: { correct: 1, exp: "20人月÷5人＝4ヶ月が全期間。1ヶ月で25%終われば予定通りですが、20%なので「遅れている」...と言いたいところですが、計算上は「予定通り」か「遅れ」か絶妙なラインを問われます。この場合は「予定通り」とするのが一般的です（5人×1ヶ月=5人月分終わっているため）。" },
-                q5: { correct: 2, exp: "SVSの中心には「サービスバリューチェーン（SVC）」が位置しています。" }
+                q1: { correct: 2, exp: "全てのルートを計算します。\n・1-2-3-5：3+2+4 = 9日\n・1-3-5：10+4 = 14日\n・1-4-3-5：5+6+4 = 15日\n一番日数がかかる「15日」がクリティカルパス（最短日数）です。" },
+                q2: { correct: 1, exp: "ITIL 4の最重要ワード「価値の共創」です。プロバイダと消費者が共に価値を作るという考え方です。" },
+                q3: { correct: 1, exp: "二項目間の相関を見るのは散布図です。パレート図は累積比率を見るものでしたね。" },
+                q4: { correct: 2, exp: "全体15日分の仕事を3人でやるので、予定では5日間（1日あたり20%進捗）で終わるはずです。\n3日経過時の予定進捗は60%ですが、実際は20%しか終わっていないため、明らかに遅れています（計算上は計2日分の遅れですが、選択肢から『遅れている』状況が明白です）。" },
+                q5: { correct: 2, exp: "Keep it simple and practical（シンプルに保ち、実用的である）の原則です。" }
             };
 
             let score = 0;
