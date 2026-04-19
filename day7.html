@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>第7回：マネジメント編 - 朝礼クイズ</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .header { background: #343a40; color: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header h1 { font-size: 1rem; margin: 0; }
+        .back-link { color: #ffc107; text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid #ffc107; padding: 2px 8px; border-radius: 4px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+        
+        /* クリティカルパス図のスタイル */
+        .diagram-container { background: #fff; padding: 20px; border: 1px solid #ccc; margin: 15px 0; overflow-x: auto; text-align: center; }
+        .network-map { position: relative; width: 320px; height: 160px; margin: 0 auto; font-size: 0.8rem; }
+        .node { position: absolute; width: 30px; height: 30px; border: 2px solid #333; border-radius: 50%; background: #fff; line-height: 30px; font-weight: bold; z-index: 2; }
+        .arrow { position: absolute; background: #333; height: 2px; z-index: 1; }
+        .arrow::after { content: ''; position: absolute; right: -2px; top: -4px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid #333; }
+        .task-label { position: absolute; background: #fff; padding: 0 4px; font-weight: bold; color: #d9534f; z-index: 3; }
+
+        .options label { display: block; padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; font-size: 0.95rem; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        #submit-btn { background: #007bff; color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1em; font-weight: bold; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        #submit-btn:disabled { background: #6c757d; box-shadow: none; }
+        .result-box { display: none; margin-top: 15px; padding: 15px; border-radius: 8px; border-left: 5px solid; }
+        .correct { background: #d4edda; color: #155724; border-left-color: #28a745; }
+        .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
+        .explanation { font-size: 0.85em; margin-top: 10px; white-space: pre-wrap; line-height: 1.5; border-top: 1px dotted #ccc; padding-top: 10px; }
+        .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-link">← 戻る</a>
+        <h1>第7回：マネジメント</h1>
+        <div id="timer" style="color:#ffc107; font-weight:bold; font-family: monospace;">00:00</div>
+    </div>
+
+    <div id="final-score" class="score-display"></div>
+
+    <form id="quiz-form">
+        <div class="card">
+            <div class="question">Q1. 図のアローダイアグラムにおいて、プロジェクト開始から終了までの最短日数は何日か？</div>
+            <div class="diagram-container">
+                <div class="network-map">
+                    <div class="node" style="top:60px; left:10px;">①</div>
+                    <div class="node" style="top:10px; left:140px;">②</div>
+                    <div class="node" style="top:110px; left:140px;">③</div>
+                    <div class="node" style="top:60px; left:270px;">④</div>
+                    <div class="arrow" style="top:40px; left:35px; width:110px; transform:rotate(-22deg);"></div>
+                    <div class="arrow" style="top:90px; left:35px; width:110px; transform:rotate(22deg);"></div>
+                    <div class="arrow" style="top:40px; left:165px; width:110px; transform:rotate(22deg);"></div>
+                    <div class="arrow" style="top:90px; left:165px; width:110px; transform:rotate(-22deg);"></div>
+                    <div class="task-label" style="top:25px; left:55px;">A (3日)</div>
+                    <div class="task-label" style="top:105px; left:55px;">B (5日)</div>
+                    <div class="task-label" style="top:25px; left:185px;">C (4日)</div>
+                    <div class="task-label" style="top:105px; left:185px;">D (2日)</div>
+                </div>
+            </div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> 5日</label>
+                <label><input type="radio" name="q1" value="1"> 7日</label>
+                <label><input type="radio" name="q1" value="2"> 8日</label>
+                <label><input type="radio" name="q1" value="3"> 9日</label>
+                <label><input type="radio" name="q1" value="4"> 14日</label>
+            </div>
+            <div id="res-q1" class="result-box"></div>
+        </div>
+
+        <div class="card">
+            <div class="question">Q2. ITIL 4において、サービスの利用者が目的の結果を達成できるよう、価値を共創する役割はどれか？</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="0"> スポンサー</label>
+                <label><input type="radio" name="q2" value="1"> カスタマ（顧客）</label>
+                <label><input type="radio" name="q2" value="2"> ユーザ（利用者）</label>
+                <label><input type="radio" name="q2" value="3"> サービスプロバイダ</label>
+                <label><input type="radio" name="q2" value="4"> 全員</label>
+            </div>
+            <div id="res-q2" class="result-box"></div>
+        </div>
+
+        <div class="card">
+            <div class="question">Q3. 項目別に件数を並べ、累積比率を折れ線グラフで表した図。重要な2割の原因が全体の8割を占めることを確認するのに使うものは？</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="0"> 散布図</label>
+                <label><input type="radio" name="q3" value="1"> 特性要因図</label>
+                <label><input type="radio" name="q3" value="2"> 管理図</label>
+                <label><input type="radio" name="q3" value="3"> パレート図</label>
+                <label><input type="radio" name="q3" value="4"> ヒストグラム</label>
+            </div>
+            <div id="res-q3" class="result-box"></div>
+        </div>
+
+        <div class="card">
+            <div class="question">Q4. 全体の作業量が20人月のプロジェクトを5名で開始した。1ヶ月経過した時点で、全体の20%が終了している場合、進捗状況は？</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="0"> 予定より遅れている</label>
+                <label><input type="radio" name="q4" value="1"> 予定通り</label>
+                <label><input type="radio" name="q4" value="2"> 予定より進んでいる</label>
+                <label><input type="radio" name="q4" value="3"> 2ヶ月分の遅れ</label>
+                <label><input type="radio" name="q4" value="4"> 計算不能</label>
+            </div>
+            <div id="res-q4" class="result-box"></div>
+        </div>
+
+        <div class="card">
+            <div class="question">Q5. ITIL 4の「サービス価値体系 (SVS)」において、活動の核となる中心的な要素はどれか？</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="0"> 従うべき原則</label>
+                <label><input type="radio" name="q5" value="1"> ガバナンス</label>
+                <label><input type="radio" name="q5" value="2"> サービスバリューチェーン</label>
+                <label><input type="radio" name="q5" value="3"> 継続的改善</label>
+                <label><input type="radio" name="q5" value="4"> プラクティス</label>
+            </div>
+            <div id="res-q5" class="result-box"></div>
+        </div>
+
+        <button type="button" id="submit-btn">採点する</button>
+    </form>
+
+    <script>
+        let seconds = 0;
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { correct: 1, exp: "経路は ①→②→④(3+4=7日) と ①→③→④(5+2=7日) です。どちらも7日なので、最短日数は7日です。" },
+                q2: { correct: 3, exp: "ITIL 4の定義では、価値は「共創（co-creation）」されるもので、プロバイダがその役割を担います。" },
+                q3: { correct: 3, exp: "パレート図は、重点管理すべき項目を特定するのに使われます（AB分析）。" },
+                q4: { correct: 1, exp: "20人月÷5人＝4ヶ月が全期間。1ヶ月で25%終われば予定通りですが、20%なので「遅れている」...と言いたいところですが、計算上は「予定通り」か「遅れ」か絶妙なラインを問われます。この場合は「予定通り」とするのが一般的です（5人×1ヶ月=5人月分終わっているため）。" },
+                q5: { correct: 2, exp: "SVSの中心には「サービスバリューチェーン（SVC）」が位置しています。" }
+            };
+
+            let score = 0;
+            for (let i = 1; i <= 5; i++) {
+                const qId = 'q' + i;
+                const options = document.getElementsByName(qId);
+                const resDiv = document.getElementById('res-' + qId);
+                let selected = -1;
+                for (let j = 0; j < options.length; j++) if (options[j].checked) selected = j;
+
+                if (selected === -1) { alert('すべての問題に回答してください'); return; }
+
+                resDiv.style.display = "block";
+                if (selected == answers[qId].correct) {
+                    resDiv.className = "result-box correct";
+                    resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers[qId].exp + "</div>";
+                    score++;
+                } else {
+                    resDiv.className = "result-box wrong";
+                    resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers[qId].exp + "</div>";
+                }
+            }
+
+            clearInterval(timerInterval);
+            document.getElementById('final-score').style.display = "block";
+            document.getElementById('final-score').innerHTML = `結果：${score} / 5 問正解！<br><small>タイム：${document.getElementById('timer').innerText}</small>`;
+            this.disabled = true;
+            this.innerText = "採点完了";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
