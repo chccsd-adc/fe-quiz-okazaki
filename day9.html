@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>第9回：アルゴリズム編(3) - 朝礼クイズ</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .header { background: #343a40; color: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header h1 { font-size: 1rem; margin: 0; }
+        .back-link { color: #ffc107; text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid #ffc107; padding: 2px 8px; border-radius: 4px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .program-box { background: #2d2d2d; color: #f8f8f2; padding: 15px; font-family: monospace; font-size: 0.95em; white-space: pre; overflow-x: auto; border-radius: 6px; margin: 15px 0; }
+        .blank { color: #ff79c6; font-weight: bold; border-bottom: 2px solid #ff79c6; padding: 0 5px; }
+        .options label { display: block; padding: 15px; margin-bottom: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        #submit-btn { background: #007bff; color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1em; font-weight: bold; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        #submit-btn:disabled { background: #6c757d; box-shadow: none; }
+        .result-box { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; border-left: 5px solid; }
+        .correct { background: #d4edda; color: #155724; border-left-color: #28a745; }
+        .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
+        .explanation { font-size: 0.9em; margin-top: 10px; white-space: pre-wrap; line-height: 1.6; border-top: 1px dotted #ccc; padding-top: 10px; }
+        .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-link">← 戻る</a>
+        <h1>第9回：アルゴリズム(3)</h1>
+        <div id="timer" style="color:#ffc107; font-weight:bold; font-family: monospace;">00:00</div>
+    </div>
+
+    <div id="final-score" class="score-display"></div>
+
+    <div class="card">
+        <p>次の手続 <b>find_max</b> は、配列 <b>data</b> の中から最大値を抽出するアルゴリズムである。空欄 <span class="blank"> α </span> に入る適切な条件はどれか。</p>
+        <div class="program-box">○find_max(配列: data, 要素数: n)
+  max ← data[1]
+  for (i を 2 から n まで 1 ずつ増やす)
+     if (<span class="blank"> α </span>)
+        max ← data[i]
+     endif
+  endfor
+  return max</div>
+
+        <form id="quiz-form">
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> data[i] < max</label>
+                <label><input type="radio" name="q1" value="1"> data[i] > max</label>
+                <label><input type="radio" name="q1" value="2"> i > max</label>
+                <label><input type="radio" name="q1" value="3"> data[i] == data[i-1]</label>
+                <label><input type="radio" name="q1" value="4"> max == 0</label>
+            </div>
+            <button type="button" id="submit-btn">採点する</button>
+        </form>
+        <div id="res-q1" class="result-box"></div>
+    </div>
+
+    <script>
+        let seconds = 0;
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { 
+                    correct: 1, 
+                    exp: "【アルゴリズムの解説】\n" +
+                         "1. 暫定の最大値(max)を1番目のデータに設定します。\n" +
+                         "2. 2番目から順にデータを比較していきます。\n" +
+                         "3. もし『今のデータ(data[i])が暫定最大値(max)よりも大きければ』、maxを今のデータに書き換えます。\n\n" +
+                         "したがって、空欄には data[i] > max が入ります。\n\n" +
+                         "【💡 科目Bのポイント】\n" +
+                         "比較対象が「インデックス(i)」なのか「中身(data[i])」なのかを見極めるのがコツです！"
+                }
+            };
+            const options = document.getElementsByName('q1');
+            let selected = -1;
+            for (let i = 0; i < options.length; i++) if (options[i].checked) selected = i;
+
+            if (selected === -1) { alert("回答を選択してください"); return; }
+
+            clearInterval(timerInterval);
+            const resDiv = document.getElementById('res-q1');
+            resDiv.style.display = "block";
+            let score = 0;
+
+            if (selected == answers.q1.correct) {
+                resDiv.className = "result-box correct";
+                resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers.q1.exp + "</div>";
+                score = 1;
+            } else {
+                resDiv.className = "result-box wrong";
+                resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers.q1.exp + "</div>";
+            }
+
+            const finalScoreDiv = document.getElementById('final-score');
+            finalScoreDiv.style.display = "block";
+            finalScoreDiv.innerHTML = `結果：${score} / 1 問正解！<br><small>タイム：${document.getElementById('timer').innerText}</small>`;
+
+            this.disabled = true;
+            this.innerText = "採点完了";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
