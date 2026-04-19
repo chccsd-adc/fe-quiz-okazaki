@@ -13,7 +13,7 @@
         .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
         
-        /* クリティカルパス図のスタイル（複雑化） */
+        /* クリティカルパス図 */
         .diagram-container { background: #fff; padding: 20px; border: 1px solid #ccc; margin: 15px 0; overflow-x: auto; }
         .network-map { position: relative; width: 420px; height: 180px; margin: 0 auto; }
         .node { position: absolute; width: 30px; height: 30px; border: 2px solid #333; border-radius: 50%; background: #fff; line-height: 30px; font-weight: bold; z-index: 2; text-align: center; }
@@ -52,7 +52,14 @@
                     <div class="node" style="top:140px; left:110px;">4</div>
                     <div class="node" style="top:75px; left:350px;">5</div>
 
-                    <div class="arrow" style="top:50px; left:35px; width:85px; transform:rotate(-35deg);"></div> <div class="arrow" style="top:88px; left:40px; width:170px;"></div> <div class="arrow" style="top:125px; left:35px; width:85px; transform:rotate(35deg);"></div> <div class="arrow" style="top:50px; left:135px; width:85px; transform:rotate(35deg);"></div> <div class="arrow" style="top:125px; left:135px; width:85px; transform:rotate(-35deg);"></div> <div class="arrow" style="top:88px; left:240px; width:110px;"></div> <div class="task-label" style="top:25px; left:40px;">A(3)</div>
+                    <div class="arrow" style="top:50px; left:35px; width:85px; transform:rotate(-35deg);"></div>
+                    <div class="arrow" style="top:88px; left:40px; width:170px;"></div>
+                    <div class="arrow" style="top:125px; left:35px; width:85px; transform:rotate(35deg);"></div>
+                    <div class="arrow" style="top:50px; left:135px; width:85px; transform:rotate(35deg);"></div>
+                    <div class="arrow" style="top:125px; left:135px; width:85px; transform:rotate(-35deg);"></div>
+                    <div class="arrow" style="top:88px; left:240px; width:110px;"></div>
+
+                    <div class="task-label" style="top:25px; left:40px;">A(3)</div>
                     <div class="task-label" style="top:70px; left:110px;">B(10)</div>
                     <div class="task-label" style="top:135px; left:40px;">C(5)</div>
                     <div class="task-label" style="top:45px; left:165px;">D(2)</div>
@@ -61,7 +68,7 @@
                 </div>
             </div>
             <div class="options">
-                <label><input type="radio" name="q1" value="0"> 13日</label>
+                <label><input type="radio" name="q1" value="0"> 9日</label>
                 <label><input type="radio" name="q1" value="1"> 14日</label>
                 <label><input type="radio" name="q1" value="2"> 15日</label>
                 <label><input type="radio" name="q1" value="3"> 17日</label>
@@ -100,8 +107,8 @@
                 <label><input type="radio" name="q4" value="0"> 予定より進んでいる</label>
                 <label><input type="radio" name="q4" value="1"> 予定通り</label>
                 <label><input type="radio" name="q4" value="2"> 1日分遅れている</label>
-                <label><input type="radio" name="q4" value="3"> 3日分遅れている</label>
-                <label><input type="radio" name="q4" value="4"> 終了予定が早まる</label>
+                <label><input type="radio" name="q4" value="3"> 2日分遅れている</label>
+                <label><input type="radio" name="q4" value="4"> 3日分遅れている</label>
             </div>
             <div id="res-q4" class="result-box"></div>
         </div>
@@ -132,11 +139,11 @@
 
         document.getElementById('submit-btn').addEventListener('click', function() {
             const answers = {
-                q1: { correct: 2, exp: "全てのルートを計算します。\n・1-2-3-5：3+2+4 = 9日\n・1-3-5：10+4 = 14日\n・1-4-3-5：5+6+4 = 15日\n一番日数がかかる「15日」がクリティカルパス（最短日数）です。" },
-                q2: { correct: 1, exp: "ITIL 4の最重要ワード「価値の共創」です。プロバイダと消費者が共に価値を作るという考え方です。" },
-                q3: { correct: 1, exp: "二項目間の相関を見るのは散布図です。パレート図は累積比率を見るものでしたね。" },
-                q4: { correct: 2, exp: "全体15日分の仕事を3人でやるので、予定では5日間（1日あたり20%進捗）で終わるはずです。\n3日経過時の予定進捗は60%ですが、実際は20%しか終わっていないため、明らかに遅れています（計算上は計2日分の遅れですが、選択肢から『遅れている』状況が明白です）。" },
-                q5: { correct: 2, exp: "Keep it simple and practical（シンプルに保ち、実用的である）の原則です。" }
+                q1: { correct: 2, exp: "【経路の比較】\n・1-2-3-5ルート：3+2+4 = 9日\n・1-3-5ルート：10+4 = 14日\n・1-4-3-5ルート：5+6+4 = 15日\n最も日数がかかる「15日」がこのプロジェクトの最短日数（クリティカルパス）となります。" },
+                q2: { correct: 1, exp: "ITIL 4の核心「価値の共創」です。" },
+                q3: { correct: 1, exp: "散布図は二項目間の相関関係を見る図です。" },
+                q4: { correct: 3, exp: "全体15人日の仕事を3人でやるので、予定では5日間（1日あたり20%ずつ進捗）で終わるはずです。\n3日経過時点では「60%」終わっているのが予定ですが、実際は「20%」なので、1日分(20%)しか進んでいません。\n予定の3日分に対し、1日分しか終わっていないため「2日分遅れている」となります。" },
+                q5: { correct: 2, exp: "「シンプルに保ち、実用的である」の原則です。" }
             };
 
             let score = 0;
@@ -147,7 +154,7 @@
                 let selected = -1;
                 for (let j = 0; j < options.length; j++) if (options[j].checked) selected = j;
 
-                if (selected === -1) { alert('すべての問題に回答してください'); return; }
+                if (selected === -1) { alert('回答を選択してください'); return; }
 
                 resDiv.style.display = "block";
                 if (selected == answers[qId].correct) {
