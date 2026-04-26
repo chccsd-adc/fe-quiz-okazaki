@@ -32,11 +32,15 @@
     </div>
     <div id="final-score" class="score-display"></div>
     <div class="card">
-        <p>次の手続 <b>sum_even</b> は、配列 <b>data</b> の中から <b>偶数のみ</b> を合計して返すものである。空欄に入る適切な組み合わせはどれか。<br>（※ <b>x % 2 == 0</b> は、xを2で割った余りが0、つまりxが偶数であることを示す）</p>
+        <p>次の手続 <b>sum_even</b> は、配列 <b>data</b> の中から <b>偶数のみ</b> を合計して返すアルゴリズムである。空欄に入る適切な組み合わせはどれか。</p>
+        <p style="font-size: 0.85em; background: #fff9db; padding: 8px; border-radius: 4px;">
+            ※ <b>x mod y</b> は、xをyで割った余りを表す。<br>
+            ※ <b>a = b</b> は、aとbが等しいことを表す。
+        </p>
         <div class="program-box">○sum_even(配列: data, 要素数: n)
   total ← <span class="blank"> α </span>
   for (i を 1 から n まで 1 ずつ増やす)
-     if (data[i] % 2 == 0)
+     if (data[i] mod 2 = 0)
         total ← <span class="blank"> β </span>
      endif
   endfor
@@ -65,7 +69,7 @@
             const answers = {
                 q1: { 
                     correct: 2, 
-                    exp: "【正解：α: 0 , β: total + data[i]】\n\n・合計値(total)の初期化は 0 から始めます。\n・「合計」を計算する場合、現在の合計(total)にその時の値(data[i])を足していきます。\n\n【ひっかけポイント】\n・もし「個数」を数えるなら total + 1 になります。\n・初期値を data[1] にしてしまうと、それが偶数でない場合や、2重に加算される原因になります。"
+                    exp: "【正解：α: 0 , β: total + data[i]】\n\n・合計値(total)の初期化は 0 から始めます。\n・「合計」を計算する場合、現在の合計(total)にその時の値(data[i])を足していきます。\n\n【💡 基本情報のポイント】\n試験では『個数（カウント）』を問うのか『合計（サマリー）』を問うのかで、代入式が total + 1 か total + data[i] かが変わります。問題文をしっかり読むのがコツです！"
                 }
             };
             const options = document.getElementsByName('q1');
