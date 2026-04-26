@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>第10回：ネットワーク・マネジメント編 - 朝礼クイズ</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .header { background: #343a40; color: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header h1 { font-size: 1rem; margin: 0; }
+        .back-link { color: #ffc107; text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid #ffc107; padding: 2px 8px; border-radius: 4px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+        .options label { display: block; padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; font-size: 0.95rem; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        #submit-btn { background: #007bff; color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1em; font-weight: bold; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        #submit-btn:disabled { background: #6c757d; box-shadow: none; }
+        .result-box { display: none; margin-top: 15px; padding: 15px; border-radius: 8px; border-left: 5px solid; }
+        .correct { background: #d4edda; color: #155724; border-left-color: #28a745; }
+        .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
+        .explanation { font-size: 0.85em; margin-top: 10px; white-space: pre-wrap; line-height: 1.5; border-top: 1px dotted #ccc; padding-top: 10px; }
+        .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-link">← 戻る</a>
+        <h1>第10回：ネット・マネジメント</h1>
+        <div id="timer" style="color:#ffc107; font-weight:bold; font-family: monospace;">00:00</div>
+    </div>
+    <div id="final-score" class="score-display"></div>
+    <form id="quiz-form">
+        <div class="card">
+            <div class="question">Q1. プライベートIPアドレスをグローバルIPアドレスに変換し、複数の端末で一つのグローバルIPを共有できるようにする技術はどれか？</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> DNS</label>
+                <label><input type="radio" name="q1" value="1"> NAPT (IPマスカレード)</label>
+                <label><input type="radio" name="q1" value="2"> DHCP</label>
+                <label><input type="radio" name="q1" value="3"> NTP</label>
+                <label><input type="radio" name="q1" value="4"> SNMP</label>
+            </div>
+            <div id="res-q1" class="result-box"></div>
+        </div>
+        <div class="card">
+            <div class="question">Q2. システム開発において、要件定義からテストまでを順番に進めていく手法を何と呼ぶか？</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="0"> アジャイルモデル</label>
+                <label><input type="radio" name="q2" value="1"> プロトタイプモデル</label>
+                <label><input type="radio" name="q2" value="2"> スパイラルモデル</label>
+                <label><input type="radio" name="q2" value="3"> ウォータフォールモデル</label>
+                <label><input type="radio" name="q2" value="4"> DevOps</label>
+            </div>
+            <div id="res-q2" class="result-box"></div>
+        </div>
+        <div class="card">
+            <div class="question">Q3. OSI参照モデルにおいて、ルータが動作し、経路選択（ルーティング）を行う層はどこか？</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="0"> 第1層：物理層</label>
+                <label><input type="radio" name="q3" value="1"> 第2層：データリンク層</label>
+                <label><input type="radio" name="q3" value="2"> 第3層：ネットワーク層</label>
+                <label><input type="radio" name="q3" value="3"> 第4層：トランスポート層</label>
+                <label><input type="radio" name="q3" value="4"> 第7層：アプリケーション層</label>
+            </div>
+            <div id="res-q3" class="result-box"></div>
+        </div>
+        <div class="card">
+            <div class="question">Q4. プロジェクトの進捗管理において、各作業の開始と終了を横棒で示し、スケジュールを一目で把握できるようにした図はどれか？</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="0"> ガントチャート</label>
+                <label><input type="radio" name="q4" value="1"> パレート図</label>
+                <label><input type="radio" name="q4" value="2"> マインドマップ</label>
+                <label><input type="radio" name="q4" value="3"> 特性要因図</label>
+                <label><input type="radio" name="q4" value="4"> 散布図</label>
+            </div>
+            <div id="res-q4" class="result-box"></div>
+        </div>
+        <div class="card">
+            <div class="question">Q5. ネットワークにおいて、ホスト名とIPアドレスを対応づける仕組み（名前解決）を行うサービスはどれか？</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="0"> HTTP</label>
+                <label><input type="radio" name="q5" value="1"> FTP</label>
+                <label><input type="radio" name="q5" value="2"> DNS</label>
+                <label><input type="radio" name="q5" value="3"> SMTP</label>
+                <label><input type="radio" name="q5" value="4"> POP3</label>
+            </div>
+            <div id="res-q5" class="result-box"></div>
+        </div>
+        <button type="button" id="submit-btn">採点する</button>
+    </form>
+    <script>
+        let seconds = 0;
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { correct: 1, exp: "NAPTは、一つのグローバルIPで複数の端末をネット接続可能にする技術です。" },
+                q2: { correct: 3, exp: "上流から下流へ水が流れるように進めるため「ウォータフォール」と呼ばれます。" },
+                q3: { correct: 2, exp: "ルータはネットワーク層（第3層）でIPアドレスを見てパケットを中継します。" },
+                q4: { correct: 0, exp: "工程管理の定番、ガントチャートです。" },
+                q5: { correct: 2, exp: "DNS (Domain Name System) は、URLとIPアドレスの橋渡しをします。" }
+            };
+            let score = 0;
+            for (let i = 1; i <= 5; i++) {
+                const qId = 'q' + i;
+                const options = document.getElementsByName(qId);
+                const resDiv = document.getElementById('res-' + qId);
+                let selected = -1;
+                for (let j = 0; j < options.length; j++) if (options[j].checked) selected = j;
+                if (selected === -1) { alert('回答を選択してください'); return; }
+                resDiv.style.display = "block";
+                if (selected == answers[qId].correct) {
+                    resDiv.className = "result-box correct";
+                    resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers[qId].exp + "</div>";
+                    score++;
+                } else {
+                    resDiv.className = "result-box wrong";
+                    resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers[qId].exp + "</div>";
+                }
+            }
+            clearInterval(timerInterval);
+            document.getElementById('final-score').style.display = "block";
+            document.getElementById('final-score').innerHTML = `結果：${score} / 5 問正解！<br><small>タイム：${document.getElementById('timer').innerText}</small>`;
+            this.disabled = true;
+            this.innerText = "採点完了";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
