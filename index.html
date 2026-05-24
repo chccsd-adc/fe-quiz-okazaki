@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>基本情報技術者試験：朝礼クイズ INDEX</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        h1 { text-align: center; color: #343a40; font-size: 1.5rem; margin-bottom: 30px; }
+        
+        /* 10回ごとの折りたたみコンテナ */
+        details { background: white; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
+        summary { background: #343a40; color: white; padding: 15px; font-weight: bold; cursor: pointer; user-select: none; font-size: 1.1rem; outline: none; }
+        summary:hover { background: #495057; }
+        details[open] summary { border-bottom: 1px solid #ddd; background: #212529; }
+        
+        .folder-content { padding: 15px; background: #fafafa; }
+        
+        /* 従来通りのボタンレイアウト */
+        .quiz-row { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: white; border: 1px solid #eee; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .quiz-row:last-child { margin-bottom: 0; }
+        .quiz-title { font-weight: bold; font-size: 1.05rem; }
+        
+        .btn { padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem; text-align: center; min-width: 80px; }
+        .btn-available { background-color: #28a745; color: white; }
+        .btn-available:hover { background-color: #218838; }
+        .btn-unavailable { background-color: #6c757d; color: #e9ecef; cursor: not-allowed; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <h1>基本情報技術者試験<br>朝礼クイズ・リンク集</h1>
+
+    <details>
+        <summary>第 1 回 〜 第 10 回</summary>
+        <div class="folder-content" id="group-1"></div>
+    </details>
+
+    <details>
+        <summary>第 11 回 〜 第 20 回</summary>
+        <div class="folder-content" id="group-2"></div>
+    </details>
+
+    <details>
+        <summary>第 21 回 〜 第 30 回</summary>
+        <div class="folder-content" id="group-3"></div>
+    </details>
+
+    <script>
+        // 設定：各グループの開始と終了の回数
+        const groups = [
+            { id: 'group-1', start: 1, end: 10 },
+            { id: 'group-2', start: 11, end: 20 },
+            { id: 'group-3', start: 21, end: 30 }
+        ];
+
+        // 各行を生成してファイル存在チェックを行う関数
+        async function listQuizzes() {
+            for (const group of groups) {
+                const container = document.getElementById(group.id);
+                if (!container) continue;
+
+                for (let i = group.start; i <= group.end; i++) {
+                    // ファイル名は day01.html, day15.html の形式
+                    const fileName = `day${String(i).padStart(2, '0')}.html`;
+                    
+                    // 行の枠組みを作成
+                    const row = document.createElement('div');
+                    row.className = 'quiz-row';
+                    row.innerHTML = `<span class="quiz-title">第${i}回</span>`;
+                    
+                    const btn = document.createElement('a');
+                    btn.innerText = '確認中';
+                    btn.className = 'btn btn-unavailable';
+                    row.appendChild(btn);
+                    container.appendChild(row);
+
+                    // 非同期でファイルの存在をチェックしてボタンを切り替え
+                    fetch(fileName, { method: 'HEAD' })
+                        .then(res => {
+                            if (res.ok) {
+                                btn.href = fileName;
+                                btn.innerText = '挑戦する';
+                                btn.className = 'btn btn-available';
+                            } else {
+                                btn.innerText = '準備中';
+                                btn.className = 'btn btn-unavailable';
+                            }
+                        })
+                        .catch(() => {
+                            btn.innerText = '準備中';
+                            btn.className = 'btn btn-unavailable';
+                        });
+                }
+            }
+        }
+
+        // 実行
+        listQuizzes();
+    </script>
+</body>
+</html>
