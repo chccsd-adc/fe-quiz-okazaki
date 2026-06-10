@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>第24回：クラスと単方向リスト（末尾データ追加編） - 朝礼クイズ</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .header { background: #343a40; color: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header h1 { font-size: 1rem; margin: 0; }
+        .back-link { color: #ffc107; text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid #ffc107; padding: 2px 8px; border-radius: 4px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+        .options label { display: block; padding: 15px; margin-bottom: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        #submit-btn { background: #007bff; color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1em; font-weight: bold; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        #submit-btn:disabled { background: #6c757d; box-shadow: none; }
+        .result-box { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; border-left: 5px solid; }
+        .correct { background: #d4edda; color: #155724; border-left-color: #28a745; }
+        .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
+        .explanation { font-size: 0.9em; margin-top: 10px; white-space: pre-wrap; line-height: 1.6; border-top: 1px dotted #ccc; padding-top: 10px; }
+        .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
+        .program-box { background: #2d2d2d; color: #f8f8f2; padding: 15px; font-family: monospace; font-size: 0.95em; white-space: pre; overflow-x: auto; border-radius: 6px; margin: 15px 0; }
+        .hint-box { font-size: 0.85em; background: #fff9db; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-link">← 戻る</a>
+        <h1>第24回：クラスと単方向リスト</h1>
+        <div id="timer" style="color:#ffc107; font-weight:bold; font-family: monospace;">00:00</div>
+    </div>
+    <div id="final-score" class="score-display"></div>
+    <div class="card">
+        <div class="question">
+            昇順に並んだ単方向リストの「末尾」に、新しいデータを追加したい。以下のプログラムを実行したとき、【 空欄 】に入る適切な代入文を答えよ。
+        </div>
+        
+        <div class="hint-box">
+            <strong>💡 同僚向けヒント（クラスとインスタンス）</strong><br>
+            ・<strong>クラス</strong>：要素の「設計図」のこと。<br>
+            ・<strong>インスタンス</strong>：設計図から実体化した、メモリ上の「1個1個の箱（要素）」のこと。<br>
+            ・各インスタンスは、値を保持する <code>value</code> と、次のインスタンスの場所を指す矢印（ポインタ）である <code>next</code> を持っています。
+        </div>
+
+        <p style="font-size: 0.85em;">
+            <strong>【初期状態】</strong><br>
+            ・リストの先頭には、空のインスタンス（ダミーノード）が常に存在します。<br>
+            ・現在、リストには <strong>[ダミー] → [20] → [35] → NULL</strong> の順でインスタンスが並んでいます。<br>
+            ・新しく末尾に追加したいインスタンスを <code>p</code>（<code>p.value = 50</code>）とします。
+        </p>
+        
+        <div class="program-box">/* 初期設定 */
+prev ← listHead（ダミーノードのインスタンス）
+curr ← listHead.next（20のインスタンス）
+input ← 50（追加したい値）
+
+/* 挿入する位置（末尾）までポインタを進める */
+while (curr が NULL ではない) 且つ (curr.value ＜ input)
+    prev ← curr
+    curr ← curr.next
+endwhile
+
+/* 【注目】ここで新しいインスタンス p をリストの末尾に連結する */
+【    空欄    】</div>
+
+        <form id="quiz-form">
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> <code>p.next ← prev</code></label>
+                <label><input type="radio" name="q1" value="1"> <code>curr ← p</code></label>
+                <label><input type="radio" name="q1" value="2"> <code>prev.next ← p</code></label>
+                <label><input type="radio" name="q1" value="3"> <code>prev ← p.next</code></label>
+            </div>
+            <button type="button" id="submit-btn">採点する</button>
+        </form>
+        <div id="res-q1" class="result-box"></div>
+    </div>
+
+    <script>
+        let seconds = 0;
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { 
+                    correct: 2, 
+                    exp: "【正解：prev.next ← p】\n\n「prev」と「curr」の2つのポインタ（変数）が、ループ処理によってどう変化していくかを順を追ってトレースしてみましょう。\n\n■ スタート時の状態\n・prev ＝ [ダミー]\n・curr ＝ [20]\n\n■ 1回目のループ判定\n条件：(currがNULLではない[真]) 且つ (curr.value(20) ＜ input(50)[真])\n→ 条件成立なのでループの中身を実行します。\n  ① prev ← curr  (prevが [20] に進む)\n  ② curr ← curr.next  (currが次の [35] に進む)\n\n■ 2回目のループ判定\n条件：(currがNULLではない[真]) 且つ (curr.value(35) ＜ input(50)[真])\n→ まだ小さいので、もう1歩進みます。\n  ① prev ← curr  (prevが [35] に進む)\n  ② curr ← curr.next  (currが次の NULL に進む)\n\n■ 3回目のループ判定\n条件：(currがNULLではない[偽！])\n→ currがNULLになったため、ここでwhileループが終了（ストップ）します。\n\n■ ループ終了直後の最終位置\n・prev は [35] のインスタンスを指している\n・curr は NULL を指している\n\nやりたいことは、[35]（prev）の後ろに、新しく作った [50]（p）のインスタンスを連結することです。\n[35]のインスタンスから出ている矢印の根元は「prev.next」です。これの行き先（代入元）を「p」に変えてあげる必要があるため、\n「prev.next ← p」が正しいコードとなります！" 
+                }
+            };
+
+            const options = document.getElementsByName('q1');
+            let selected = -1;
+            for (let i = 0; i < options.length; i++) if (options[i].checked) selected = i;
+            if (selected === -1) { alert("回答を選択してください"); return; }
+
+            clearInterval(timerInterval);
+            const resDiv = document.getElementById('res-q1');
+            resDiv.style.display = "block";
+            let score = (selected == answers.q1.correct) ? 1 : 0;
+
+            if (score) {
+                resDiv.className = "result-box correct";
+                resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers.q1.exp + "</div>";
+            } else {
+                resDiv.className = "result-box wrong";
+                resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers.q1.exp + "</div>";
+            }
+
+            document.getElementById('final-score').style.display = "block";
+            document.getElementById('final-score').innerHTML = `結果：${score} / 1 問正解！<br><small>タイム：${document.getElementById('timer').innerText}</small>`;
+            this.disabled = true;
+            this.innerText = "採点完了";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
