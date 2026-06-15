@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>第26回：双方向リストのメリット - 朝礼クイズ</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .header { background: #343a40; color: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header h1 { font-size: 1rem; margin: 0; }
+        .back-link { color: #ffc107; text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid #ffc107; padding: 2px 8px; border-radius: 4px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+        .options label { display: block; padding: 15px; margin-bottom: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        #submit-btn { background: #007bff; color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1em; font-weight: bold; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        #submit-btn:disabled { background: #6c757d; box-shadow: none; }
+        .result-box { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; border-left: 5px solid; }
+        .correct { background: #d4edda; color: #155724; border-left-color: #28a745; }
+        .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
+        .explanation { font-size: 0.9em; margin-top: 10px; white-space: pre-wrap; line-height: 1.6; border-top: 1px dotted #ccc; padding-top: 10px; }
+        .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
+        .hint-box { font-size: 0.85em; background: #e8f4fd; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-link">← 戻る</a>
+        <h1>第26回：双方向リストのメリット</h1>
+        <div id="timer" style="color:#ffc107; font-weight:bold; font-family: monospace;">00:00</div>
+    </div>
+    <div id="final-score" class="score-display"></div>
+    <div class="card">
+        <div class="question">
+            要素の「削除」を行うとき、単方向リストと比較して、双方向リストを採用することで得られるアルゴリズム上の最大のメリット（理由）として、最も適切なものはどれか？
+        </div>
+        
+        <div class="hint-box">
+            <strong>💡 アルゴリズムの本質を考えるヒント</strong><br>
+            前回の「単方向リストの削除」では、消したい要素（curr）を書き換えるために、わざわざ1つ手前を走る「prev」というポインタを用意して並走させていました。<br>
+            なぜそんな面倒なことをしていたのか、そして「双方向」になると何が変わるのかを思い出してみましょう。
+        </div>
+
+        <p style="font-size: 0.85em;">
+            <strong>【状況設定】</strong><br>
+            ポインタ <code>curr</code> が、削除したいインスタンス（例：値が30の要素）をピンポイントで指し示している状態からスタートします。
+        </p>
+
+        <form id="quiz-form">
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> 単方向リストよりもメモリの使用量を大幅に減らすことができるから。</label>
+                <label><input type="radio" name="q1" value="1"> 削除対象（curr）さえ分かれば、先頭からループで探さなくても、<code>curr.prev</code> を見るだけで「1つ手前の要素」に直接アクセスできるから。</label>
+                <label><input type="radio" name="q1" value="2"> 双方向リストにすることで、データを自動的に昇順にソートしながら削除できるようになるから。</label>
+                <label><input type="radio" name="q1" value="3"> 削除したインスタンスのメモリが、ガベージコレクションを使わずに即座に完全解放されるから。</label>
+            </div>
+            <button type="button" id="submit-btn">採点する</button>
+        </form>
+        <div id="res-q1" class="result-box"></div>
+    </div>
+
+    <script>
+        let seconds = 0;
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { 
+                    correct: 1, 
+                    exp: "【正解：削除対象（curr）さえ分かれば、先頭からループで探さなくても、curr.prev を見るだけで「1つ手前の要素」に直接アクセスできるから。】\n\n試験対策から一歩進んで、構造の「目的」を理解するための解説です。\n\n■ 単方向リストの弱点\n単方向リストは「次の要素（next）」への一方通行しか記録していません。そのため、要素を削除するために「1つ手前の要素の矢印を書き換えたい！」と思っても、後ろから前へ戻ることができませんでした。結果として、わざわざ先頭（listHead）から毎回「次へ、次へ…」とループを回して手前の要素を探す必要があり、データ量が多くなるほど処理に時間がかかっていました（並走するprevが必要だった理由もこれです）。\n\n■ 双方向リストの強み\n双方向リストでは、各インスタンスが「次の要素（next）」だけでなく、「前の要素（prev）」への矢印も最初から持っています。\nそのため、削除したい要素「curr」が決まった瞬間、ループを一切回さなくても、即座に「curr.prev」で手前の要素を特定し、その矢印を書き換えることができます。\n\n■ その他の選択肢について\n・選択肢の「メモリを減らせる」は間違いです。むしろ矢印が2倍に増えるため、メモリ使用量は増えます。\n・「自動ソート」や「メモリの完全解放」も、双方向リストの構造とは関係がありません。\n\n「手前を振り返る能力」を手に入れたことで、探索の無駄なループをスルーできるようになったのが双方向リスト最大のメリットです！" 
+                }
+            };
+
+            const options = document.getElementsByName('q1');
+            let selected = -1;
+            for (let i = 0; i < options.length; i++) if (options[i].checked) selected = i;
+            if (selected === -1) { alert("回答を選択してください"); return; }
+
+            clearInterval(timerInterval);
+            const resDiv = document.getElementById('res-q1');
+            resDiv.style.display = "block";
+            let score = (selected == answers.q1.correct) ? 1 : 0;
+
+            if (score) {
+                resDiv.className = "result-box correct";
+                resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers.q1.exp + "</div>";
+            } else {
+                resDiv.className = "result-box wrong";
+                resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers.q1.exp + "</div>";
+            }
+
+            document.getElementById('final-score').style.display = "block";
+            document.getElementById('final-score').innerHTML = `結果：${score} / 1 問正解！<br><small>タイム：${document.getElementById('timer').innerText}</small>`;
+            this.disabled = true;
+            this.innerText = "採点完了";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
