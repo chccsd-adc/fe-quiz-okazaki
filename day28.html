@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>第28回：二分探索木へのデータ挿入 - 朝礼クイズ</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; color: #333; }
+        .header { background: #343a40; color: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header h1 { font-size: 1rem; margin: 0; }
+        .back-link { color: #ffc107; text-decoration: none; font-weight: bold; font-size: 0.8rem; border: 1px solid #ffc107; padding: 2px 8px; border-radius: 4px; }
+        .card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .question { font-weight: bold; color: #004085; margin-bottom: 15px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+        .options label { display: block; padding: 15px; margin-bottom: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #eee; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        #submit-btn { background: #007bff; color: white; border: none; padding: 18px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1em; font-weight: bold; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
+        #submit-btn:disabled { background: #6c757d; box-shadow: none; }
+        .result-box { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; border-left: 5px solid; }
+        .correct { background: #d4edda; color: #155724; border-left-color: #28a745; }
+        .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
+        .explanation { font-size: 0.9em; margin-top: 10px; white-space: pre-wrap; line-height: 1.6; border-top: 1px dotted #ccc; padding-top: 10px; }
+        .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
+        .program-box { background: #2d2d2d; color: #f8f8f2; padding: 15px; font-family: monospace; font-size: 0.95em; white-space: pre; overflow-x: auto; border-radius: 6px; margin: 15px 0; }
+        .hint-box { font-size: 0.85em; background: #fff9db; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffc107; }
+        .tree-ascii { font-family: monospace; line-height: 1.2; background: #f8f9fa; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-link">← 戻る</a>
+        <h1>第28回：二分探索木へのデータ挿入</h1>
+        <div id="timer" style="color:#ffc107; font-weight:bold; font-family: monospace;">00:00</div>
+    </div>
+    <div id="final-score" class="score-display"></div>
+    <div class="card">
+        <div class="question">
+            初期状態の二分探索木に、新しく値「13」を持つ要素を追加したい。プログラムを実行したとき、追加された「13」はどの要素の下（左側または右側）に連結されるか？
+        </div>
+        
+        <div class="hint-box">
+            <strong>💡 2分で解くための裏ワザ（コードは読まなくてOK！）</strong><br>
+            試験問題には複雑な再帰処理やポインタのループコードが並びますが、すべてスルーして大丈夫です。<br>
+            二分探索木の絶対ルールはただ一つ、<strong>「親よりも小さい値は【左】、大きい値は【右】に枝分かれする」</strong>です。紙の端っこに図を描いて、上から順番に道を下ってみましょう！
+        </div>
+
+        <p style="font-size: 0.85em;">
+            <strong>【初期状態の二分探索木】</strong>
+        </p>
+        <div class="tree-ascii">
+     [15]
+    /    \
+ [10]    [20]
+ /  \
+[6] [12]
+        </div>
+
+        <p style="font-size: 0.85em; color: #666;">
+            ※複雑な疑似言語プログラムがここに数行〜数十行ありますが、上記のルール通りに動くだけなので、読む必要はありません。
+        </p>
+
+        <form id="quiz-form">
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> [6] の左側</label>
+                <label><input type="radio" name="q1" value="1"> [12] の左側</label>
+                <label><input type="radio" name="q1" value="2"> [12] の右側</label>
+                <label><input type="radio" name="q1" value="3"> [20] の左側</label>
+            </div>
+            <button type="button" id="submit-btn">採点する</button>
+        </form>
+        <div id="res-q1" class="result-box"></div>
+    </div>
+
+    <script>
+        let seconds = 0;
+        const timerInterval = setInterval(() => {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const s = String(seconds % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { 
+                    correct: 2, 
+                    exp: "【正解：[12] の右側】\n\nプログラムを1行も読まなくても、「小さいなら左、大きいなら右」のルールだけで30秒で解ける解説です。\n\n新しく追加したい「13」を持って、木構造のてっぺんから順番に下っていきます。\n\n1. 一番上の親 [15] と比較する\n   → 13 は 15 より【小さい】ので、【左】に進みます。\n\n2. 次の親 [10] と比較する\n   → 13 は 10 より【大きい】ので、【右】に進みます。\n\n3. 次の親 [12] と比較する\n   → 13 は 12 より【大きい】ので、【右】に進みます。\n\n4. 行き先が空いているので確定！\n   → [12] の【右側】に「13」が連結されます。\n\n■ 最終的な木の形\n     [15]\n    /    \\\n [10]    [20]\n /  \\\n[6] [12]\n       \\\n       [13] ← ここに収まります\n\n基本情報の科目Bでは、このようなデータ構造の基本ルールを知っているだけで、プログラムの解読をスキップして一瞬でボーナス点をもらえる問題がよく出題されます。同僚の方にもこの『スルーしてパズルで解く爽快感』を教えてあげてください！" 
+                }
+            };
+
+            const options = document.getElementsByName('q1');
+            let selected = -1;
+            for (let i = 0; i < options.length; i++) if (options[i].checked) selected = i;
+            if (selected === -1) { alert("回答を選択してください"); return; }
+
+            clearInterval(timerInterval);
+            const resDiv = document.getElementById('res-q1');
+            resDiv.style.display = "block";
+            let score = (selected == answers.q1.correct) ? 1 : 0;
+
+            if (score) {
+                resDiv.className = "result-box correct";
+                resDiv.innerHTML = "◯ 正解！<div class='explanation'>" + answers.q1.exp + "</div>";
+            } else {
+                resDiv.className = "result-box wrong";
+                resDiv.innerHTML = "× 不正解<div class='explanation'>" + answers.q1.exp + "</div>";
+            }
+
+            document.getElementById('final-score').style.display = "block";
+            document.getElementById('final-score').innerHTML = `結果：${score} / 1 問正解！<br><small>タイム：${document.getElementById('timer').innerText}</small>`;
+            this.disabled = true;
+            this.innerText = "採点完了";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
