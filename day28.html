@@ -21,9 +21,15 @@
         .wrong { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
         .explanation { font-size: 0.9em; margin-top: 10px; white-space: pre-wrap; line-height: 1.6; border-top: 1px dotted #ccc; padding-top: 10px; }
         .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
-        .program-box { background: #2d2d2d; color: #f8f8f2; padding: 15px; font-family: monospace; font-size: 0.95em; white-space: pre; overflow-x: auto; border-radius: 6px; margin: 15px 0; }
         .hint-box { font-size: 0.85em; background: #fff9db; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffc107; }
-        .tree-ascii { font-family: monospace; line-height: 1.2; background: #f8f9fa; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 1.1em; }
+        
+        /* 絶対に崩れない視覚的なツリー構造用CSS */
+        .tree-container { margin: 20px 0; background: #f8f9fa; padding: 15px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; }
+        .tree-row { display: flex; justify-content: center; width: 100%; margin-bottom: 10px; position: relative; }
+        .tree-node { background: #2d2d2d; color: white; font-weight: bold; padding: 8px 15px; border-radius: 5px; text-align: center; min-width: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 2; font-family: monospace; }
+        .node-space { width: 40px; }
+        /* 枝（線）の簡易表現 */
+        .lines-row { display: flex; justify-content: center; width: 100%; color: #888; font-family: monospace; font-size: 1.2rem; user-select: none; margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -41,18 +47,27 @@
         <div class="hint-box">
             <strong>💡 2分で解くための裏ワザ（コードは読まなくてOK！）</strong><br>
             試験問題には複雑な再帰処理やポインタのループコードが並びますが、すべてスルーして大丈夫です。<br>
-            二分探索木の絶対ルールはただ一つ、<strong>「親よりも小さい値は【左】、大きい値は【右】に枝分かれする」</strong>です。紙の端っこに図を描いて、上から順番に道を下ってみましょう！
+            二分探索木の絶対ルールはただ一つ、<strong>「親よりも小さい値は【左】、大きい値は【右】に枝分かれする」</strong>です。上から順番にルートを下ってみましょう！
         </div>
 
         <p style="font-size: 0.85em;">
             <strong>【初期状態の二分探索木】</strong>
         </p>
-        <div class="tree-ascii">
-     [15]
-    /    \
- [10]    [20]
- /  \
-[6] [12]
+        
+        <div class="tree-container">
+            <div class="tree-row">
+                <div class="tree-node">15</div>
+            </div>
+            <div class="lines-row">／ ＼</div>
+            <div class="tree-row" style="gap: 60px;">
+                <div class="tree-node">10</div>
+                <div class="tree-node">20</div>
+            </div>
+            <div class="lines-row" style="justify-content: flex-start; padding-left: 21%;">／ ＼</div>
+            <div class="tree-row" style="gap: 20px; justify-content: flex-start; padding-left: 14%;">
+                <div class="tree-node">6</div>
+                <div class="tree-node">12</div>
+            </div>
         </div>
 
         <p style="font-size: 0.85em; color: #666;">
@@ -84,7 +99,7 @@
             const answers = {
                 q1: { 
                     correct: 2, 
-                    exp: "【正解：[12] の右側】\n\nプログラムを1行も読まなくても、「小さいなら左、大きいなら右」のルールだけで30秒で解ける解説です。\n\n新しく追加したい「13」を持って、木構造のてっぺんから順番に下っていきます。\n\n1. 一番上の親 [15] と比較する\n   → 13 は 15 より【小さい】ので、【左】に進みます。\n\n2. 次の親 [10] と比較する\n   → 13 は 10 より【大きい】ので、【右】に進みます。\n\n3. 次の親 [12] と比較する\n   → 13 は 12 より【大きい】ので、【右】に進みます。\n\n4. 行き先が空いているので確定！\n   → [12] の【右側】に「13」が連結されます。\n\n■ 最終的な木の形\n     [15]\n    /    \\\n [10]    [20]\n /  \\\n[6] [12]\n       \\\n       [13] ← ここに収まります\n\n基本情報の科目Bでは、このようなデータ構造の基本ルールを知っているだけで、プログラムの解読をスキップして一瞬でボーナス点をもらえる問題がよく出題されます。同僚の方にもこの『スルーしてパズルで解く爽快感』を教えてあげてください！" 
+                    exp: "【正解：[12] の右側】\n\nプログラムを1行も読まなくても、「小さいなら左、大きいなら右」のルールだけで30秒で解ける解説です。\n\n新しく追加したい「13」を持って、木構造のてっぺんから順番に下っていきます。\n\n1. 一番上の親 [15] と比較する\n   → 13 は 15 より【小さい】ので、【左】に進みます。\n\n2. 次の親 [10] と比較する\n   → 13 は 10 より【大きい】ので、【右】に進みます。\n\n3. 次の親 [12] と比較する\n   → 13 は 12 より【大きい】ので、【右】に進みます。\n\n4. 行き先が空いているので確定！\n   → [12] の【右側】に「13」が連結されます。\n\n■ 最終的な木の形\n      [15]\n     /    \\\n  [10]    [20]\n  /  \\\n [6] [12]\n        \\\n        [13] ← ここに収まります\n\n基本情報の科目Bでは、このようなデータ構造の基本ルールを知っているだけで、プログラムの解読をスキップして一瞬でボーナス点をもらえる問題がよく出題されます。同僚の方にもこの『スルーしてパズルで解く爽快感』を教えてあげてください！" 
                 }
             };
 
