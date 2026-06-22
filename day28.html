@@ -23,16 +23,18 @@
         .score-display { display: none; background: #fff3cd; color: #856404; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; border: 2px solid #ffeeba; }
         .hint-box { font-size: 0.85em; background: #fff9db; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffc107; }
         
-        /* 絶対にズレないツリー構造（テーブルレイアウトを採用） */
-        .tree-table { width: 100%; max-width: 400px; margin: 20px auto; border-collapse: collapse; text-align: center; }
-        .tree-row { width: 100%; }
-        .cell-100 { width: 100%; padding: 5px 0; }
-        .cell-50 { width: 50%; padding: 5px 0; }
-        .cell-25 { width: 25%; padding: 5px 0; }
+        /* 美しく対称になるツリーテーブル構造 */
+        .tree-table { width: 100%; max-width: 360px; margin: 25px auto; border-collapse: collapse; table-layout: fixed; }
+        .tree-cell { width: 25%; text-align: center; vertical-align: middle; padding: 2px 0; }
         
-        /* ノードの装飾 */
-        .tree-node { display: inline-block; background: #2d2d2d; color: white; font-weight: bold; padding: 8px 0; width: 60px; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-family: monospace; font-size: 1.1rem; }
-        .tree-line { color: #888; font-weight: bold; font-family: monospace; font-size: 1.2rem; user-select: none; }
+        /* ノードデザイン */
+        .tree-node { display: inline-block; background: #2d2d2d; color: white; font-weight: bold; padding: 8px 0; width: 65px; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-family: monospace; font-size: 1.1rem; }
+        /* 線のデザインと微調整 */
+        .tree-line { color: #888; font-weight: bold; font-family: monospace; font-size: 1.3rem; user-select: none; line-height: 1; padding: 0; }
+        .line-left { text-align: right; padding-right: 18px; }
+        .line-right { text-align: left; padding-left: 18px; }
+        .line-sub-left { text-align: right; padding-right: 26px; }
+        .line-sub-right { text-align: left; padding-left: 26px; }
     </style>
 </head>
 <body>
@@ -58,28 +60,36 @@
         </p>
         
         <table class="tree-table">
-            <tr class="tree-row">
-                <td class="cell-100" colspan="4"><div class="tree-node">15</div></td>
+            <tr>
+                <td class="tree-cell" colspan="4">
+                    <div class="tree-node">15</div>
+                </td>
             </tr>
-            <tr class="tree-row">
-                <td class="cell-50 tree-line" colspan="2">／</td>
-                <td class="cell-50 tree-line" colspan="2">＼</td>
+            <tr>
+                <td class="tree-cell tree-line line-left" colspan="2">／</td>
+                <td class="tree-cell tree-line line-right" colspan="2">＼</td>
             </tr>
-            <tr class="tree-row">
-                <td class="cell-50" colspan="2"><div class="tree-node">10</div></td>
-                <td class="cell-50" colspan="2"><div class="tree-node">20</div></td>
+            <tr>
+                <td class="tree-cell" colspan="2">
+                    <div class="tree-node">10</div>
+                </td>
+                <td class="tree-cell" colspan="2">
+                    <div class="tree-node">20</div>
+                </td>
             </tr>
-            <tr class="tree-row">
-                <td class="cell-25 tree-line">／</td>
-                <td class="cell-25 tree-line">＼</td>
-                <td class="cell-25 tree-line"></td>
-                <td class="cell-25 tree-line"></td>
+            <tr>
+                <td class="tree-cell tree-line line-sub-left">／</td>
+                <td class="tree-cell tree-line line-sub-right">＼</td>
+                <td class="tree-cell" colspan="2"></td>
             </tr>
-            <tr class="tree-row">
-                <td class="cell-25"><div class="tree-node">6</div></td>
-                <td class="cell-25"><div class="tree-node">12</div></td>
-                <td class="cell-25"></td>
-                <td class="cell-25"></td>
+            <tr>
+                <td class="tree-cell">
+                    <div class="tree-node">6</div>
+                </td>
+                <td class="tree-cell">
+                    <div class="tree-node">12</div>
+                </td>
+                <td class="tree-cell" colspan="2"></td>
             </tr>
         </table>
 
